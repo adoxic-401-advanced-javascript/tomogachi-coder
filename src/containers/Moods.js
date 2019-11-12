@@ -3,51 +3,51 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { incAction } from '../actions/careActions';
-import { reset } from '../actions/resetActions';
-import { decTime } from '../actions/timeActions';
 
-import { getCoffee, getNaps, getSnacks, getStudies } from '../selectors/moodSelectors';
+import { getCoffee, getNaps, getSnacks, getStudies, getFace } from '../selectors/moodSelectors';
 import { getStart, getTimeLeft } from '../selectors/timeSelectors';
 
 import Controls from '../components/controls/Controls';
 import Face from '../components/face/Face';
-import getFace from '../services/moodTranslator';
 import actions from '../services/actions';
 import Start from '../components/Start';
 import Timer from '../components/Timer';
 
-const Moods = ({ state, countThing }) => {  
-  const face = getFace(state);
+const Moods = ({ coffee, naps, snacks, studies, start, timeLeft, face, handleAction }) => {  
+  const stateArr = [];
+  stateArr.push(coffee, snacks, naps, studies);
+  
+  actions.forEach((action, i) => {
+    return action['count'] = stateArr[i];
+  }
+  );
 
-  const controlActions = actions.map(action => ({
-    ...action,
-    count: state[action.stateName]
-  }));
-
-  if(state.start) {
-    return <Start handleClick={countThing} />;
+  
+  if(start) {
+    return <Start handleClick={handleAction} />;
   } 
 
+
   useEffect(() => {
-    if(state.timeLeft >= 0){
+    if(timeLeft >= 0){
       setTimeout(() => {
-        countThing('DEC_TIME');  
+        handleAction('DEC_TIME');  
 
       }, 1000);
 
-      if(state.timeLeft <= 0) {
-        countThing('RESET'); 
+      if(timeLeft <= 0) {
+        handleAction('RESET'); 
       }
       
     }
     
-  }, [state.start, state.timeLeft]);
+  }, [start, timeLeft]);
 
   return (
     <>
-      <Controls actions={controlActions} handleSelection={countThing}/>
+      <Controls actions={actions} handleSelection={handleAction}/>
       <Face emoji={face} />
-      <Timer time={state.timeLeft} />
+      <Timer time={timeLeft} />
     </>
   );
 };
@@ -67,13 +67,20 @@ const mapStateToProps = state => {
     snacks: getSnacks(state),
     studies: getStudies(state),
     start: getStart(state),
-    timeLeft: getTimeLeft(state)
+    timeLeft: getTimeLeft(state),
+    face: getFace(state)
   };
 };
 
 Moods.propTypes = {
-  state: PropTypes.object.isRequired,
-  countThing: PropTypes.func.isRequired
+  face: PropTypes.string.isRequired,
+  coffee: PropTypes.number.isRequired,
+  naps: PropTypes.number.isRequired,
+  snacks: PropTypes.number.isRequired,
+  studies: PropTypes.number.isRequired,
+  start: PropTypes.bool.isRequired,
+  timeLeft: PropTypes.number.isRequired,
+  handleAction: PropTypes.func.isRequired
 };
 
 const MoodsContainer = connect(

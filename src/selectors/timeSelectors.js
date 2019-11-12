@@ -1,2 +1,2 @@
-export const getStart = state => state.mood.start;
-export const getTimeLeft = state => state.mood.timeLeft;
+export const getStart = state => state.time.start;
+export const getTimeLeft = state => state.time.timeLeft;
