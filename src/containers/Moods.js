@@ -11,7 +11,7 @@ import Controls from '../components/controls/Controls';
 import Face from '../components/face/Face';
 import actions from '../services/actions';
 import Start from '../components/Start';
-import Timer from '../components/Timer';
+import Reset from '../components/Reset';
 
 const Moods = ({ coffee, naps, snacks, studies, start, timeLeft, face, handleAction }) => {  
   const stateArr = [];
@@ -47,7 +47,7 @@ const Moods = ({ coffee, naps, snacks, studies, start, timeLeft, face, handleAct
     <>
       <Controls actions={actions} handleSelection={handleAction}/>
       <Face emoji={face} />
-      <Timer time={timeLeft} />
+      <Reset handleClick={handleAction} />
     </>
   );
 };
