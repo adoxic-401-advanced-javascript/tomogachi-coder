@@ -1,23 +1,20 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+
+import { incAction } from '../actions/careActions';
+import { reset } from '../actions/resetActions';
+import { decTime } from '../actions/timeActions';
+
+import { getCoffee, getNaps, getSnacks, getStudies } from '../selectors/moodSelectors';
+import { getStart, getTimeLeft } from '../selectors/timeSelectors';
+
 import Controls from '../components/controls/Controls';
 import Face from '../components/face/Face';
 import getFace from '../services/moodTranslator';
 import actions from '../services/actions';
 import Start from '../components/Start';
 import Timer from '../components/Timer';
-
-const mapStateToProps = state => ({
-  state: {
-    coffee: state.coffee,
-    snacks: state.snacks,
-    naps: state.naps,
-    studies: state.studies,
-    start: state.start,
-    timeLeft: state.timeLeft
-  }
-});
 
 const Moods = ({ state, countThing }) => {  
   const face = getFace(state);
@@ -55,14 +52,24 @@ const Moods = ({ state, countThing }) => {
   );
 };
 
-const mapDispatchToProps = dispatch => ({
-  countThing(name) {
-    dispatch({
-      type: name
-    });
-  }
+const mapDispatchToProps = dispatch => {
+  return {
+    handleAction(type) {
+      dispatch(incAction(type));
+    }
+  };
+};
 
-});
+const mapStateToProps = state => {
+  return {
+    coffee: getCoffee(state),
+    naps: getNaps(state),
+    snacks: getSnacks(state),
+    studies: getStudies(state),
+    start: getStart(state),
+    timeLeft: getTimeLeft(state)
+  };
+};
 
 Moods.propTypes = {
   state: PropTypes.object.isRequired,
