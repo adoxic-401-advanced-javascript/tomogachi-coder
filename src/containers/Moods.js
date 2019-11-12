@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Controls from '../components/controls/Controls';
@@ -30,26 +30,29 @@ const Moods = ({ state, countThing }) => {
   if(state.start) {
     return <Start handleClick={countThing} />;
   } 
-  let timer;
-  
+
   useEffect(() => {
-    while(state.timeLeft > 0){
-      timer = setInterval(() => {
-        console.log('is work'); 
+    if(state.timeLeft >= 0){
+      setTimeout(() => {
         countThing('DEC_TIME');  
 
       }, 1000);
+
+      if(state.timeLeft <= 0) {
+        countThing('RESET'); 
+      }
+      
     }
     
-  }, [state.start]);
+  }, [state.start, state.timeLeft]);
   
   
-  useEffect(() => {
-    if(state.timeLeft <= 0) {
-      countThing('RESET');
-      clearTimeout(timer);
-    }
-  }, [state.timeLeft]);
+  // useEffect(() => {
+  //   console.log('in reset', timer);
+  //   if(state.timeLeft <= 0) {
+  //     countThing('RESET'); 
+  //   }
+  // }, [state.timeLeft]);
 
   return (
     <>
