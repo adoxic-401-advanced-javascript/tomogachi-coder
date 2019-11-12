@@ -45,14 +45,6 @@ const Moods = ({ state, countThing }) => {
     }
     
   }, [state.start, state.timeLeft]);
-  
-  
-  // useEffect(() => {
-  //   console.log('in reset', timer);
-  //   if(state.timeLeft <= 0) {
-  //     countThing('RESET'); 
-  //   }
-  // }, [state.timeLeft]);
 
   return (
     <>
