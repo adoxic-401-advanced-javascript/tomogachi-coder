@@ -14,11 +14,11 @@ import actions from '../services/actions';
 import Start from '../components/Start';
 import Reset from '../components/Reset';
 import Save from '../components/Save';
+import History from '../components/History';
 
 const Moods = ({ coffee, naps, snacks, studies, start, face, history, handleAction, handleSave }) => {  
   const stateArr = [];
   stateArr.push(coffee, snacks, naps, studies);
-  console.log(history);
   
   actions.forEach((action, i) => {
     return action['count'] = stateArr[i];
@@ -43,7 +43,7 @@ const Moods = ({ coffee, naps, snacks, studies, start, face, history, handleActi
       <Face emoji={face} />
       <Reset handleClick={handleAction} />
       <Save current={current} handleClick={handleSave} />
-      {/* <History history={history} /> */}
+      <History history={history} />
     </>
   );
 };

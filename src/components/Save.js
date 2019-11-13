@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const Save = ({ current, handleClick }) => {
-  console.log(current);
   return (
     <button onClick={() => handleClick(current)}>Save</button>
   );
