@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Timer = ({ handleClick }) => {
+const Reset = ({ handleClick }) => {
   return (
     <button onClick={() => handleClick('RESET')}>Reset Game</button>
   );
 };
 
-Timer.propTypes = {
+Reset.propTypes = {
   handleClick: PropTypes.func.isRequired
 };
 
-export default Timer;
+export default Reset;

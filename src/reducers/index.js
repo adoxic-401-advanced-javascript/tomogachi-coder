@@ -1,8 +1,11 @@
 import { combineReducers } from 'redux';
-import time from './timeReducer';
 import mood from './moodReducer';
+import history from './saveReducer';
 
 export default combineReducers({
-  time,
-  mood
+  mood,
+  history
 });
+
+
+
